@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notch Teleprompter</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0a0a0a;
+      --surface: #141414;
+      --border:  rgba(255,255,255,0.08);
+      --text:    #f0f0f0;
+      --muted:   rgba(255,255,255,0.42);
+      --accent:  #ffffff;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      width: 100%;
+      max-width: 720px;
+      padding: 96px 24px 64px;
+      text-align: center;
+    }
+
+    .notch-badge {
+      display: inline-block;
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      font-size: clamp(40px, 7vw, 68px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    h1 span {
+      color: var(--muted);
+    }
+
+    .tagline {
+      font-size: clamp(16px, 2.5vw, 19px);
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 480px;
+      margin: 0 auto 48px;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #000;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .download-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .download-btn svg { flex-shrink: 0; }
+
+    .req {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── App preview ── */
+    .preview {
+      width: 100%;
+      max-width: 720px;
+      padding: 0 24px 80px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .notch-mockup {
+      position: relative;
+      width: 360px;
+    }
+
+    /* Fake screen bar with notch */
+    .screen-bar {
+      background: #000;
+      border-radius: 12px 12px 0 0;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-bottom: none;
+    }
+    .screen-bar .corner-btn {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.28);
+      font-size: 9px;
+    }
+    /* Notch cut-out */
+    .notch-cut {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 130px;
+      height: 32px;
+      background: #111820; /* page background behind it */
+      border-radius: 0 0 14px 14px;
+    }
+
+    /* Text body below the bar */
+    .screen-body {
+      background: #000;
+      border-radius: 0 0 12px 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: none;
+      padding: 20px 24px 24px;
+      text-align: center;
+    }
+    .screen-body p {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+    }
+    .screen-body .hint {
+      margin-top: 12px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.28);
+    }
+
+    /* ── Features ── */
+    .features {
+      width: 100%;
+      max-width: 720px;
+      padding: 0 24px 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .feature-card .icon {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+    .feature-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .feature-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── Install steps ── */
+    .install {
+      width: 100%;
+      max-width: 720px;
+      padding: 0 24px 96px;
+    }
+
+    .install h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .step:last-child { border-bottom: none; }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .step-text strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    .step-text span {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    code {
+      background: rgba(255,255,255,0.07);
+      border-radius: 5px;
+      padding: 1px 6px;
+      font-family: "SF Mono", ui-monospace, monospace;
+      font-size: 12px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      width: 100%;
+      padding: 28px 24px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="notch-badge">macOS · Menu bar app</div>
+    <h1>Notch<br><span>Teleprompter</span></h1>
+    <p class="tagline">
+      A teleprompter that lives in your MacBook's notch.
+      Your script scrolls right where the camera is — so you look directly at your audience.
+    </p>
+    <!-- UPDATE href to your GitHub release download URL -->
+    <a class="download-btn" href="https://github.com/rahulmatthan/notchTP/releases/latest/download/MacbookTeleprompter.dmg">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Download for Mac — Free
+    </a>
+    <p class="req">macOS 13 Ventura or later &nbsp;·&nbsp; MacBook with notch recommended</p>
+  </section>
+
+  <!-- App mockup -->
+  <div class="preview">
+    <div class="notch-mockup">
+      <div class="screen-bar">
+        <div class="corner-btn">✕</div>
+        <div class="notch-cut"></div>
+        <div class="corner-btn">⚙</div>
+      </div>
+      <div class="screen-body">
+        <p>Good morning. Thank you for having me. Today I want to talk about something that has been on my mind for quite some time…</p>
+        <div class="hint">Tap to play / pause &nbsp;·&nbsp; Space bar &nbsp;·&nbsp; Trackpad scroll</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="feature-card">
+      <div class="icon">📷</div>
+      <h3>Eye contact, effortlessly</h3>
+      <p>Text scrolls directly below the camera so you appear to look right at your audience.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">⌨️</div>
+      <h3>Keyboard control</h3>
+      <p>Space to play/pause. Arrow keys to nudge speed. R to reset. Esc to close.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📋</div>
+      <h3>Paste any script</h3>
+      <p>Copy your text anywhere, tap the settings icon, hit Paste. Done.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🖥</div>
+      <h3>Lives in the menu bar</h3>
+      <p>No Dock icon. One click to show or hide. Stays out of your way until you need it.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🎞</div>
+      <h3>Smooth animation</h3>
+      <p>The panel emerges from behind the notch when you open it and retreats when you close.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🎛</div>
+      <h3>Adjustable speed &amp; size</h3>
+      <p>Dial in your scroll speed and font size from the settings flyout.</p>
+    </div>
+  </section>
+
+  <!-- Install steps -->
+  <section class="install">
+    <h2>How to install</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>Download the DMG</strong>
+          <span>Click the download button above and open the <code>.dmg</code> file.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>Copy to Applications</strong>
+          <span>Drag <code>MacbookTeleprompter.app</code> into your Applications folder.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>Bypass Gatekeeper (first launch only)</strong>
+          <span>Because the app isn't notarized, <strong>right-click → Open</strong> instead of double-clicking, then click <strong>Open</strong> in the dialog. You only need to do this once.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <strong>Look for the icon in your menu bar</strong>
+          <span>Click it to show the teleprompter. Paste your script from the ⚙ settings panel and press Space.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Copyright © 2026 Rahul Matthan &nbsp;·&nbsp;
+    <a href="https://github.com/rahulmatthan/notchTP">View source on GitHub</a></p>
+  </footer>
+
+</body>
+</html>

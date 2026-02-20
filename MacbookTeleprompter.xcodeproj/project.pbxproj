@@ -14,6 +14,7 @@
 		AA000024 /* TeleprompterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000014 /* TeleprompterView.swift */; };
 		AA000025 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015 /* ControlsView.swift */; };
 		AA000026 /* SettingsPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000018 /* SettingsPanel.swift */; };
+		AA000027 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = AA000019 /* AppIcon.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		AA000016 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA000017 /* MacbookTeleprompter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacbookTeleprompter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA000018 /* SettingsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPanel.swift; sourceTree = "<group>"; };
+		AA000019 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				AA000014 /* TeleprompterView.swift */,
 				AA000015 /* ControlsView.swift */,
 				AA000018 /* SettingsPanel.swift */,
+				AA000019 /* AppIcon.icns */,
 				AA000016 /* Info.plist */,
 			);
 			path = MacbookTeleprompter;
@@ -128,6 +131,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA000027 /* AppIcon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

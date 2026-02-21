@@ -151,6 +151,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         case 15: // R
             viewModel.reset()
+        case 8: // C
+            viewModel.clearText()
         default:
             if event.modifierFlags.contains(.command) && event.keyCode == 9 { // Cmd+V
                 viewModel.pasteFromClipboard()

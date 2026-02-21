@@ -135,8 +135,8 @@ struct ScrollableTextView: View {
             if viewModel.text.isEmpty {
                 VStack {
                     Spacer()
-                    Text("Tap ⚙ to paste · Space to play/pause")
-                        .font(.system(size: 12))
+                    Text("⚙ paste script\nSpace play/pause · R reset · C clear")
+                        .font(.system(size: 11))
                         .foregroundColor(.white.opacity(0.28))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 16)

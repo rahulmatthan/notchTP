@@ -40,6 +40,12 @@ class TeleprompterViewModel: ObservableObject {
         scrollOffset = 0
     }
 
+    func clearText() {
+        isPlaying = false
+        scrollOffset = 0
+        text = ""
+    }
+
     // MARK: - Timer
 
     private func startTimer() {

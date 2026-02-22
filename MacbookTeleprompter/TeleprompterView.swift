@@ -113,13 +113,16 @@ struct EmergeShape: Shape {
         var path = Path()
         path.move(to: CGPoint(x: xMin + tR, y: 0))
         path.addLine(to: CGPoint(x: xMax - tR, y: 0))
-        path.addQuadCurve(to: CGPoint(x: xMax,      y: tR),        control: CGPoint(x: xMax, y: 0))
+        // Top-right convex corner: control point is outside the view so the curve
+        // passes through the corner point (xMax, 0) rather than tucking inside it
+        path.addQuadCurve(to: CGPoint(x: xMax,      y: tR),        control: CGPoint(x: xMax + tR / 2, y: -tR / 2))
         path.addLine(to: CGPoint(x: xMax,      y: yMax - bR))
         path.addQuadCurve(to: CGPoint(x: xMax - bR, y: yMax),      control: CGPoint(x: xMax, y: yMax))
         path.addLine(to: CGPoint(x: xMin + bR, y: yMax))
         path.addQuadCurve(to: CGPoint(x: xMin,      y: yMax - bR), control: CGPoint(x: xMin, y: yMax))
         path.addLine(to: CGPoint(x: xMin,      y: tR))
-        path.addQuadCurve(to: CGPoint(x: xMin + tR, y: 0),         control: CGPoint(x: xMin, y: 0))
+        // Top-left convex corner: same technique, mirrored
+        path.addQuadCurve(to: CGPoint(x: xMin + tR, y: 0),         control: CGPoint(x: xMin - tR / 2, y: -tR / 2))
         path.closeSubpath()
         return path
     }

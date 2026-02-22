@@ -105,8 +105,8 @@ struct EmergeShape: Shape {
         let xMax = xMin + w
         let yMax = h        // top is always pinned to y = 0
 
-        // Top corners: start with a small radius (notch bottom curve) → flatten to 0
-        let tR = (1 - f) * 8
+        // Top corners: keep the same radius as the notch so they match at all times
+        let tR: CGFloat = 8
         // Bottom corners: grow smoothly up to the final bottomRadius
         let bR = min(bottomRadius, h * 0.45)
 

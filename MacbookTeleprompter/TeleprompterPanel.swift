@@ -42,8 +42,8 @@ class TeleprompterPanel: NSPanel {
     static func calculateFrame() -> (CGPoint, CGSize) {
         let screen = NSScreen.main ?? NSScreen.screens[0]
         let safeTop = screen.safeAreaInsets.top   // ~32pt notched, 0 otherwise
-        let winW: CGFloat = 360
-        let winH: CGFloat = 180
+        let winW: CGFloat = TeleprompterLayout.panelWidth
+        let winH: CGFloat = TeleprompterLayout.panelHeight
         let x = (screen.frame.width - winW) / 2
 
         let y: CGFloat
@@ -89,14 +89,7 @@ class TeleprompterPanel: NSPanel {
     private func setupScrollMonitor() {
         scrollMonitor = NSEvent.addLocalMonitorForEvents(matching: .scrollWheel) { [weak self] event in
             guard let self = self else { return event }
-            let wasPlaying = self.viewModel.isPlaying
-            if wasPlaying { self.viewModel.isPlaying = false }
-            self.viewModel.scrollOffset = max(0, self.viewModel.scrollOffset - event.scrollingDeltaY)
-            if wasPlaying {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                    self?.viewModel.isPlaying = true
-                }
-            }
+            self.viewModel.adjustScroll(by: event.scrollingDeltaY)
             return event
         }
     }

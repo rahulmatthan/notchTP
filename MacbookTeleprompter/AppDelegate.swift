@@ -13,7 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let viewModel = TeleprompterViewModel()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        NSApp.setActivationPolicy(.accessory)
+        NSApp.setActivationPolicy(.regular)
         setupStatusItem()
         setupGlobalKeyMonitor()
     }
@@ -65,6 +65,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         hideSettings()
         viewModel.isPlaying = false
+        viewModel.stopSpeechTracking()
         viewModel.isDismissing = true   // triggers reverse animation in TeleprompterView
 
         // Destroy the panel after the spring has settled (~1.0 s response + small buffer)
@@ -135,13 +136,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if viewModel.isPlaying {
                 viewModel.speed = min(120, viewModel.speed + 5)
             } else {
-                viewModel.scrollOffset = max(0, viewModel.scrollOffset - 20)
+                viewModel.nudgeUp()
             }
         case 125: // Down arrow
             if viewModel.isPlaying {
                 viewModel.speed = max(10, viewModel.speed - 5)
             } else {
-                viewModel.scrollOffset += 20
+                viewModel.nudgeDown()
             }
         case 53: // Escape
             if isSettingsVisible {

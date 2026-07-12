@@ -5,3 +5,15 @@ xcuserdata/
 *.xcworkspace/xcuserdata/
 DerivedData/
 .DS_Store
+
+# Pre-migration backup additions
+.build/
+node_modules/
+__pycache__/
+dist/
+*.log
+.env
+.env.*
+venv/
+.venv/
+.claude/settings.local.json

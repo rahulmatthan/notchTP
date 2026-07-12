@@ -57,7 +57,7 @@ struct TeleprompterView: View {
                 .contentShape(Rectangle())
                 .onTapGesture { viewModel.togglePlayback() }
         }
-        .frame(width: 360, height: 180)
+        .frame(width: TeleprompterLayout.panelWidth, height: TeleprompterLayout.panelHeight)
         .background(Color.black)
         // Expand outward from the notch centre
         .clipShape(EmergeShape(
@@ -147,16 +147,26 @@ struct ScrollableTextView: View {
                 }
                 .frame(width: geo.size.width)
             } else {
-                Text(viewModel.text)
-                    .font(.system(size: viewModel.fontSize, weight: .medium))
-                    .foregroundColor(.white)
-                    .lineSpacing(4)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .frame(width: geo.size.width, alignment: .top)
+                ZStack(alignment: .top) {
+                    VStack(spacing: 12) {
+                        ForEach(viewModel.segments) { segment in
+                            Text(segment.text)
+                                .font(.system(size: viewModel.fontSize, weight: .medium))
+                                .foregroundColor(segment.id == viewModel.currentAnchorIndex ? .white : .white.opacity(0.78))
+                                .lineSpacing(6)
+                                .multilineTextAlignment(.center)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .frame(width: geo.size.width, alignment: .top)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(segment.id == viewModel.currentAnchorIndex ? Color.white.opacity(0.08) : .clear)
+                                )
+                        }
+                    }
                     .offset(y: -viewModel.scrollOffset)
+                }
             }
         }
         .clipped()

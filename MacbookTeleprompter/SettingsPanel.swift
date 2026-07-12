@@ -9,8 +9,8 @@ class SettingsPanel: NSPanel {
         onClose: @escaping () -> Void,
         onDismiss: @escaping () -> Void
     ) {
-        let w: CGFloat = 220
-        let h: CGFloat = 260
+        let w: CGFloat = 250
+        let h: CGFloat = 320
         // Position: right of main window, tops aligned
         let x = anchorFrame.maxX + 6
         let y = anchorFrame.maxY - h

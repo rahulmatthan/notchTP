@@ -15,6 +15,8 @@
 		AA000025 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015 /* ControlsView.swift */; };
 		AA000026 /* SettingsPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000018 /* SettingsPanel.swift */; };
 		AA000027 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = AA000019 /* AppIcon.icns */; };
+		AA000028 /* SpeechTrackingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000029 /* SpeechTrackingService.swift */; };
+		AA00002A /* TeleprompterTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00002B /* TeleprompterTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		AA000017 /* MacbookTeleprompter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacbookTeleprompter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA000018 /* SettingsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPanel.swift; sourceTree = "<group>"; };
 		AA000019 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
+		AA000029 /* SpeechTrackingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechTrackingService.swift; sourceTree = "<group>"; };
+		AA00002B /* TeleprompterTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeleprompterTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				AA000015 /* ControlsView.swift */,
 				AA000018 /* SettingsPanel.swift */,
 				AA000019 /* AppIcon.icns */,
+				AA000029 /* SpeechTrackingService.swift */,
+				AA00002B /* TeleprompterTypes.swift */,
 				AA000016 /* Info.plist */,
 			);
 			path = MacbookTeleprompter;
@@ -149,6 +155,8 @@
 				AA000024 /* TeleprompterView.swift in Sources */,
 				AA000025 /* ControlsView.swift in Sources */,
 				AA000026 /* SettingsPanel.swift in Sources */,
+				AA000028 /* SpeechTrackingService.swift in Sources */,
+				AA00002A /* TeleprompterTypes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,7 +285,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MacbookTeleprompter/MacbookTeleprompter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -303,7 +310,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MacbookTeleprompter/MacbookTeleprompter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;

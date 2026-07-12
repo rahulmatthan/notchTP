@@ -61,6 +61,43 @@ struct SettingsView: View {
                         .tint(.white.opacity(0.55))
                 }
 
+                VStack(spacing: 6) {
+                    HStack {
+                        Text("Playback")
+                            .font(.system(size: 11))
+                            .foregroundColor(.white.opacity(0.45))
+                        Spacer()
+                    }
+
+                    Picker("Playback", selection: Binding(
+                        get: { viewModel.playbackMode },
+                        set: { viewModel.setPlaybackMode($0) }
+                    )) {
+                        ForEach(PlaybackMode.allCases) { mode in
+                            Text(mode.title).tag(mode)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+
+                    HStack(spacing: 8) {
+                        Circle()
+                            .fill(statusColor)
+                            .frame(width: 7, height: 7)
+                        Text(viewModel.speechStatusText)
+                            .font(.system(size: 10.5))
+                            .foregroundColor(.white.opacity(0.55))
+                        Spacer()
+                        if viewModel.playbackMode == .followVoice {
+                            Button("Re-sync") {
+                                viewModel.resyncToVisiblePosition()
+                            }
+                            .buttonStyle(.plain)
+                            .font(.system(size: 10.5, weight: .medium))
+                            .foregroundColor(.white.opacity(0.65))
+                        }
+                    }
+                }
+
                 // Font size slider
                 VStack(spacing: 3) {
                     HStack {
@@ -72,7 +109,17 @@ struct SettingsView: View {
                             .font(.system(size: 11, design: .monospaced))
                             .foregroundColor(.white.opacity(0.45))
                     }
-                    Slider(value: $viewModel.fontSize, in: 10...40, step: 2)
+                    Slider(
+                        value: Binding(
+                            get: { Double(viewModel.fontSize) },
+                            set: { newValue in
+                                viewModel.fontSize = CGFloat(newValue)
+                                viewModel.refreshLayoutPreservingPosition()
+                            }
+                        ),
+                        in: 10...40,
+                        step: 2
+                    )
                         .tint(.white.opacity(0.55))
                 }
             }
@@ -98,7 +145,7 @@ struct SettingsView: View {
             }
             .buttonStyle(.plain)
         }
-        .frame(width: 220, height: 260)
+        .frame(width: 250, height: 320)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(charcoal.opacity(0.97))
@@ -107,6 +154,19 @@ struct SettingsView: View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Color.white.opacity(0.09), lineWidth: 1)
         )
+    }
+
+    private var statusColor: Color {
+        switch viewModel.trackingState {
+        case .locked:
+            return .green.opacity(0.85)
+        case .recovering:
+            return .yellow.opacity(0.85)
+        case .auto:
+            return .orange.opacity(0.85)
+        case .unavailable:
+            return .red.opacity(0.85)
+        }
     }
 }
 

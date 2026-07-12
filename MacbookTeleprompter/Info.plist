@@ -25,11 +25,15 @@
     <key>LSMinimumSystemVersion</key>
     <string>$(MACOSX_DEPLOYMENT_TARGET)</string>
     <key>LSUIElement</key>
-    <true/>
+    <false/>
     <key>NSHumanReadableCopyright</key>
     <string>Copyright © 2026 Rahul Matthan. All rights reserved.</string>
     <key>NSAppleEventsUsageDescription</key>
     <string>MacBook Teleprompter uses keyboard monitoring to let you control playback from any app.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>MacBook Teleprompter listens to your voice so it can keep the teleprompter aligned with your speaking pace.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>MacBook Teleprompter uses speech recognition to match what you are saying to your script and keep scrolling in sync.</string>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
 </dict>
